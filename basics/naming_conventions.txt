@@ -1,0 +1,38 @@
+package main
+
+import "fmt"
+
+type EmployeeGoogle struct {
+	FirstName string
+	LastName  string
+	Age       int
+}
+
+type EmployeeApple struct {
+	FirstName string
+	LastName  string
+	Age       int
+}
+
+func main() {
+
+	//1. PascalCase - Used to name types such as Structs, interfaces, enums
+	// eg - CalculateArea, UserInfo, NewHTTPRequest
+
+	//2. snake_case - commonly used for naming variables, constants and filenames
+	// eg - user_id, first_name, http_request
+
+	//3. UPPERCASE - exclusively used for naming constants in go
+
+	//4. mixedCase - used to name variables or certain identifiers especially dealing
+	//   with external libraries
+	// eg - javaScript, htmlDocument, isValid
+
+	//keep the package names short without underscores and lowercase
+
+	const MAXRETRIES = 5
+
+	var employeeID = 1001
+	fmt.Println("EmployeeID: ", employeeID)
+
+}

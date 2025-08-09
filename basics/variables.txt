@@ -1,0 +1,39 @@
+package basics
+
+import "fmt"
+
+// global variable
+var middleName = "Cane"
+
+func main() {
+	// var age int
+	// var age1 = 23;
+	// var name string = "John"
+	// var name1 = "Jane"
+
+	// gofer way to declare variables - only local variable
+	// Type is inferred by the go compiler
+	// Allow variables to be initialized without explicitly specifying the type
+	// count := 10
+	// lastName := "Smith"
+
+	middleName := "Mayor"
+	fmt.Println(middleName)
+
+	// Default values
+	// Numeric Types: 0
+	// Boolean Types: false
+	// String Type: ""
+	// Pointers, slices, maps, functions and structs: nil
+
+	//--------- SCOPE
+	// block scope
+	// fmt.Println(firstName)
+
+}
+
+func printname() {
+	//local variable - created when their scope is entered and destroyed when their scope is exited
+	firstName := "Michael"
+	fmt.Println(firstName)
+}

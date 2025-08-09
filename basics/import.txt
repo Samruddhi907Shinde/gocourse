@@ -1,0 +1,26 @@
+package main
+
+import (
+	"fmt"
+	foo "net/http"  // named import by the name of foo
+)
+
+func main() {
+	fmt.Println("Hello, Go Standard Library")
+
+	resp, err := foo.Get("https://jsonplaceholder.typicode.com/posts/1")
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	fmt.Println("HTTP Response Status: ", resp.Status)
+
+	// Tree Shaking - Compiler and linker include only required parts, 
+	// Static analysis, Dead code elimination
+	// Reduce Bundle Size
+	// Improved Performance
+	// Efficient Dependency Management
+
+}
