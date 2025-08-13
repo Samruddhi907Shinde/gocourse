@@ -1,0 +1,20 @@
+package baiscs
+
+const pi = 3.14
+const GRAVITY = 9.81
+
+func main(){
+
+	// const - immutable values
+	//const must be initialized with values that can be determined at compile time
+    // no short gofer decalaration for variables 
+
+	const days int = 7
+
+	const(
+		monday = 1
+		tuesday = 2
+		wednesday = 3
+		thursday int = 4
+	)
+}
