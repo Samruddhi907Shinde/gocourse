@@ -1,0 +1,27 @@
+package main
+
+import "fmt"
+
+func init() {
+	fmt.Println("Initializing package1...")
+}
+
+func init() {
+	fmt.Println("Initializing package2...")
+}
+
+func init() {
+	fmt.Println("Initializing package3...")
+}
+
+func main() {
+
+	// Init func is a special function that can be declared in any package
+	// Used to perform initialization tasks for the package before it is used
+	// Init function has no parmeters and no return values
+	// Init function is always executed before the main function once per package
+	// Init functions run sequentially in the order they are written
+
+	fmt.Println("Inside the main function")
+
+}

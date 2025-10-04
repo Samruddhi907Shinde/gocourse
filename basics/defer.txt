@@ -1,0 +1,26 @@
+package main
+
+import "fmt"
+
+func main() {
+
+	// Defer allows to postpone function execution until the surrounding function returns
+	// Defer keyword will defer the execution till the end of that function
+	// Multiple deferred statements in a function and they will be executed in a LIFO order
+	// deferred earliest will be processed last
+	// Arguments to deferred functions are evaluted immediately when the deferred statement is encountered
+	
+
+	process(10)
+
+}
+
+func process(i int) {
+	defer fmt.Println("Deferred i value:", i)
+	defer fmt.Println("First deferred statement executed")
+	defer fmt.Println("Second deferred statement executed")
+	defer fmt.Println("Third deferred statement executed")
+	i++
+	fmt.Println("Normal execution statement")
+	fmt.Println("Value of i:", i)
+}

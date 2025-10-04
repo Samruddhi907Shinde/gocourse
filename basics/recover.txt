@@ -1,0 +1,32 @@
+package main
+
+import "fmt"
+
+func main() {
+
+	// Recover is a built in function that is used to regain control of a panicking go routine
+	// It is used inside a deferred function to catch a panic and prevent abrupt termination
+	// recover() returns the value that it receives from panic function
+	// best practice : Always use recover with defer
+	// While recover can be used to catch panics, it is better to log panic details
+	
+
+	process()
+	fmt.Println("Returned from process")
+
+}
+
+func process() {
+	defer func() {
+		// if r := recover(); r != nil {
+		r := recover()
+		if r != nil {
+			fmt.Println("Recovered :", r)
+		}
+	}()
+
+	fmt.Println("Start Process")
+	panic("Something went wrong!")
+	fmt.Println("End Process")
+
+}

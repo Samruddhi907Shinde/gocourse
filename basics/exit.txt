@@ -1,0 +1,24 @@
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+
+	// os.Exit() is a fuction that terminates the program immediately with the given status code
+	// Useful for situations where you need to halt the execution of the program completely without deferring any functions
+	// Defer functions will not be executed when os.Exit() is called
+	// It bypasses the normal defer, panic and recover mechanisms
+
+	defer fmt.Println("Deferred statement")
+	fmt.Println("Starting with the main function")
+
+	// Exit with status code of 1
+	os.Exit(1)
+
+	// This will never be executed
+	fmt.Println("End of main function")
+
+}
