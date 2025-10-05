@@ -1,0 +1,55 @@
+package main
+
+import "fmt"
+
+func main() {
+
+	// Closures allow functions to capture and manipulate variables defined outside their body
+	// A closure is a function value that references variables from outside its body.
+	// Closures allow functions to capture and manipulate variables defined outside their body.
+	// Keep the scope of captured variables in closures as narrow as possible.
+
+	sequence := adder()
+
+	fmt.Println(sequence())
+
+	// Subsequent calls to the existing closure
+	fmt.Println(sequence())
+	fmt.Println(sequence())
+	fmt.Println(sequence())
+
+	// New closure
+	sequence2 := adder()
+	fmt.Println(sequence2())
+
+	// Anonymous function
+	subtracter := func() func(x int) int {
+
+		// return function captures the variable countdown from its surrounding context
+		countdown := 99
+		return func(x int) int {
+			countdown -= x
+			return countdown
+		}
+	}()
+
+	// Using the closure subtracter
+	fmt.Println(subtracter(1))
+	fmt.Println(subtracter(2))
+	fmt.Println(subtracter(3))
+	fmt.Println(subtracter(4))
+	fmt.Println(subtracter(5))
+
+}
+
+func adder() func() int {
+	i := 0
+	fmt.Println("previous value of i:", i)
+
+	// Anonymous function
+	return func() int {
+		i++
+		fmt.Println("added 1 to i")
+		return i
+	}
+}

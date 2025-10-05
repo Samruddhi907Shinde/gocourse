@@ -1,0 +1,39 @@
+package main
+
+import "fmt"
+
+func main() {
+
+	// Pointer is a variable that stores the memory address of another variable
+	// Pointers allow us to modify the value of a variable indirectly
+	// Type of pointer must match the type of variable it examines
+	// Can also pass pointers to the functions
+	// When we are using pointers, the actual memory address of the variable is passed on to the function
+
+	var ptr *int
+	var a int = 10
+
+	// ptr will save the memory address of the variable a
+	// referencing the operator
+	ptr = &a
+
+	fmt.Println(a)
+	fmt.Println(ptr)
+	fmt.Println(&a)
+
+	// Dereferencing operator - used to get the value which is stored at that memory address
+	fmt.Println(*ptr)
+
+	var ptr1 *int
+	if ptr1 == nil {
+		fmt.Println("Pointer is nil")
+	}
+
+	modifyValue(ptr)
+	fmt.Println(a)
+
+}
+
+func modifyValue(ptr *int) {
+	*ptr++
+}
