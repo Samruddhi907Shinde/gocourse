@@ -1,0 +1,49 @@
+package main
+
+import "fmt"
+
+type person struct {
+	name string
+	age  int
+}
+
+type Employee struct {
+	employeeInfo person // Named field
+	person // Anonymous field // Embedded struct - employee inherits the fields and methods of person
+	empId  string
+	salary float64
+}
+
+func (p person) introduce() {
+	fmt.Printf("Hi, I'm %s and I'm %d years old.\n", p.name, p.age)
+}
+
+// MethodOverriding - methods can be overridden by redefining them in the outer struct
+func (e Employee) introduce() {
+	fmt.Printf("Hi, I'm %s, employee ID: %s, and I earn %0.2f.\n", e.name, e.empId, e.salary)
+}
+
+func main() {
+
+	// Struct embedding allows a struct to inherit fields and methods from another struct type
+	// Code reuse and structuring data
+
+	emp := Employee{
+		person: person{
+			name: "John", age: 30,
+		},
+		empId:  "E001",
+		salary: 50000,
+	}
+
+	// Field promotion only happens only in case of anonymous fields
+	fmt.Println("Name:", emp.name) // Accessing the embedded struct field directly no need of - emp.person.name - field promotion
+	fmt.Println("Age:", emp.age)   // Same as above
+	fmt.Println("Emp ID:", emp.empId)
+	fmt.Println("Salary:", emp.salary)
+
+	// The introduce method is now overridden by the employee method of the same name
+	// Employee's introduce method overrides the person's introduce method
+	emp.introduce()
+
+}

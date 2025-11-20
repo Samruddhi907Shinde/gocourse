@@ -1,0 +1,97 @@
+package main
+
+import "fmt"
+
+// In go cannot define a struct and its methods directly inside the main function
+// Because go requires types and associated methods to be declared in the global scope so that it is accesible throughout the package
+// Similar to classes in OOPS
+type Person struct {
+	firstName     string
+	lastName      string
+	age           int
+	address       Address // Embed Address struct within Person struct
+	PhoneHomeCell         // Embedded anonymous field
+}
+
+type PhoneHomeCell struct {
+	home string
+	cell string
+}
+
+type Address struct {
+	city    string
+	country string
+}
+
+// Go does not allow us to add method to a struct directly inside the struct
+// flexibility - allows methods to be defined for any type not just structs
+// p Person is an instance of Person struct
+// Value receiver - operates on a copy of the struct instance
+func (p Person) fullName() string {
+	return p.firstName + " " + p.lastName
+}
+
+// Pointer receiver - allows method to modify the original struct instance
+func (p *Person) increamentAgeByOne() {
+	p.age++
+}
+
+func main() {
+
+	// In main function we can create instances of structs and call methods on those intances
+	// Structs can be initializedusing struct literal
+	p1 := Person{
+		firstName: "John",
+		lastName:  "Doe",
+		age:       30,
+		address: Address{
+			city:    "London",
+			country: "UK",
+		},
+		PhoneHomeCell: PhoneHomeCell{
+			home: "465456454",
+			cell: "45456464544",
+		},
+	}
+
+	p2 := Person{
+		firstName: "Jane",
+		age:       25,
+	}
+
+	p2.address.city = "New York"
+	p2.address.country = "USA"
+
+	p3 := Person{
+		firstName: "Harry",
+		age:       35,
+	}
+
+	p4 := Person{
+		firstName: "Harry",
+		age:       35,
+	}
+
+	fmt.Println(p1.firstName)
+	fmt.Println(p2.firstName)
+	fmt.Println(p1.fullName())
+	fmt.Println("Before increment", p1.age)
+	p1.increamentAgeByOne()
+	fmt.Println("After increment", p1.age)
+	fmt.Println(p1.address)
+	fmt.Println(p2.address.country)
+	fmt.Println(p1.cell)
+	fmt.Println("Are p3 and p4 equal?", p3 == p4)
+
+	// Anonymous Structs - useful for temporary data structures
+	user := struct {
+		username string
+		email    string
+	}{
+		username: "user123",
+		email:    "pseudoemail@example.org",
+	}
+
+	fmt.Println(user.username)
+
+}
