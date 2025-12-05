@@ -30,7 +30,7 @@ func main() {
 
 	parseURL1, err := url.Parse(rawURL1)
 	if err != nil {
-		fmt.Println(parseURL1)
+		fmt.Println("Error parsing URL:", err)
 		return
 	}
 
