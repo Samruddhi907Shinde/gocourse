@@ -1,0 +1,84 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+
+	// buff io package provides buffered input output operations, improves performance for reading/writing large volumes of data
+	// buffereing reads and writes data in chunks and we can define these chunks
+	// Sending smaller chunks, they get transferred easily
+	// File will be uploaded in smaller chunks to tranfer the data efficiently and faster
+	// Buffering is transferring data communicating between two ends in chunks
+
+	// bufio package provides efficient buffering of data, reducing the number of system calls which can improve performance
+	// Bufio.reader is a struct and it wraps around io.reader
+	// String.NewReader() - tool that lets us read string
+	// bufio.NewReader() - allows to read string more efficiently by reading entire lines or chunks of data(buffering)
+	reader := bufio.NewReader(strings.NewReader("Hello, bufio packageee!\nHow are you doing?")) // source
+
+	// Reading byte slice
+	// Read function reads up to a certain limit
+	// Read method is used for transferring data from a source to target
+	data := make([]byte, 20) // target
+	n, err := reader.Read(data)
+	if err != nil {
+		fmt.Println("Error reading:", err)
+		return
+	}
+	fmt.Printf("Read %d bytes: %s\n", n, data[:n])
+
+	// Read string reads data up to a certain delimiter character
+	// Reading when it stops and again starts reading then it starts from the point where it left
+	// ReadString stops at new line character '\n'
+	line, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("Error reading string:", err)
+		return
+	}
+	fmt.Println("Read string:", line)
+
+	// Bufio.writer is a struct that wraps around io.writer and provides buffering for efficient writing of data
+	// os.Stdout is a writer because os.File implements write method
+	// io.writer interface tells that any struct that implements write method will be considered the same type as io.writer
+	writer := bufio.NewWriter(os.Stdout) // target
+
+	// Writing byte slice
+	data = []byte("Hello, bufio package!\n") // source
+	n, err = writer.Write(data)
+	if err != nil {
+		fmt.Println("Error writing:", err)
+		return
+	}
+	fmt.Printf("Wrote %d bytes\n", n)
+
+	// In bufio.writer all the data that is written to the writer is stored in an internal buffer
+	// It is not immediately written to the os.Stdout - the data is not automatically flush to the writer
+	// Flush the buffer to ensure all data is written to os.stdout
+	err = writer.Flush()
+	if err != nil {
+		fmt.Println("Error flushing writer:", err)
+		return
+	}
+
+	// Writing string
+	// Write vs WriteString - Write accepts byte slice whereas WriteString accepts string directly
+	str := "This is a string.\n"
+	n, err = writer.WriteString(str)
+	if err != nil {
+		fmt.Println("Error writing string:", err)
+		return
+	}
+	fmt.Printf("Wrote %d bytes.\n", n)
+
+	// Flush the buffer
+	err = writer.Flush()
+	if err != nil {
+		fmt.Println("Error flushing writer:", err)
+		return
+	}
+}
