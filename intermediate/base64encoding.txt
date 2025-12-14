@@ -1,0 +1,39 @@
+package main
+
+import (
+	"encoding/base64"
+	"fmt"
+)
+
+func main() {
+
+	// Encoding is method used to translate data from its original format into a specific format that can be used by other systems, applications or protocols
+	// So that data can be stored, transmitted or processed effectively
+	// Data sent over networks or between systems must be encoded
+	// Data Encoding - Base64 - encoding binary data into text format
+	// Base64 - converts binary data into a textual representattion using a set of 64 ASCII characters
+	// Why Base64 - It enables binary data to be stored as text in databases or files that do not support binary formats
+	// Helps in text transmission over protocols that are designed to handle text data, such as email or HTTP
+
+	// Equal to sign "=" at the end is for padding
+	// Base64 encoding is not encryption as we were able to decode it easily
+
+	data := []byte("He~lo, Base64 Encoding")
+
+	// Encode to Base64
+	encoded := base64.StdEncoding.EncodeToString(data)
+	fmt.Println(encoded)
+
+	// Decode from Base64
+	decoded, err := base64.StdEncoding.DecodeString(encoded)
+	if err != nil {
+		fmt.Println("Error in decoding: ", err)
+		return
+	}
+	fmt.Println("Decoded: ", string(decoded))
+
+	// URL safe, avoid '/' and '+'
+	urlSafeEncoded := base64.URLEncoding.EncodeToString(data)
+	fmt.Println("URL Safe encoded:", urlSafeEncoded)
+
+}
