@@ -62,7 +62,7 @@ func main() {
 	values.Add("city", "London")
 	values.Add("country", "UK")
 
-	//Encode
+	//Encode - Encode key value pairs in the URL format
 	encodeQuery := values.Encode()
 
 	fmt.Println(encodeQuery)

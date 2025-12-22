@@ -1,0 +1,93 @@
+package main
+
+import (
+	"crypto/rand"
+	"crypto/sha256"
+	"crypto/sha512"
+	"encoding/base64"
+	"fmt"
+	"io"
+)
+
+func main() {
+
+	// Hashing results in fixed size output, no matter how large is the input
+	// Deterministic -same input will always produce the same hash output
+	// Avalanche Effect - Even a small change in the input will produce a completely different hash
+	// One way function - Hashing resuts in an irreversible output
+	// Hashing is efficient
+	// It is used in data intergrity
+	// Hashing is used for password storage - intead of storing passwords directly, systems store hash of the password
+	// And when you login the system hashes the password you provide and compares it to the stored hash
+	// Information is lost during hashing, its impossible to recover the original input from the output
+
+	password := "password123"
+
+	hash := sha256.Sum256([]byte(password))
+	hash512 := sha512.Sum512([]byte(password))
+
+	fmt.Println(password)
+
+	// byte slice of ASCII values of the hexadecimal characters
+	fmt.Println(hash)
+	fmt.Println(hash512)
+
+	// Hexadecimal value
+	fmt.Printf("SHA-256 Hash hex val: %x\n", hash)
+	fmt.Printf("SHA-512 Hash hex val: %x\n", hash512)
+
+	// Salting - Adds extra layer of security - password + unique random value
+	// Salting ensures that even if the two users have the same password their hashed values will be different due to different salts
+	salt, err := generateSalt()
+	fmt.Println("Original Salt:", salt)
+	fmt.Printf("Original Salt: %x\n", salt)
+	if err != nil {
+		fmt.Println("Error generating salt:", err)
+		return
+	}
+
+	// Hash the password with salt
+	signUpHash := hashPassword(password, salt)
+
+	// Store the salt and password in database, just printing as of now
+	// In case of data breach the attacker will not get the actual salt string, but an encoded salt string
+	saltStr := base64.StdEncoding.EncodeToString(salt)
+	fmt.Println("Salt:", saltStr)    // simulate as storing in database
+	fmt.Println("Hash:", signUpHash) // simulate as storing in database
+	hashOriginalPassword := sha256.Sum256([]byte(password))
+	fmt.Println("Hash of just the password string without salt:", base64.StdEncoding.EncodeToString(hashOriginalPassword[:]))
+
+	// verify
+	// retrive the saltStr and decode it
+	decodedSalt, err := base64.StdEncoding.DecodeString(saltStr)
+	if err != nil {
+		fmt.Println("Unable to decode salt:", err)
+		return
+	}
+	loginHash := hashPassword("password124", decodedSalt)
+
+	// Compare the stored signUpHash with loginHash
+	if signUpHash == loginHash {
+		fmt.Println("Password is correct. You are logged in.")
+	} else {
+		fmt.Println("Login failed. Please check user credentials.")
+	}
+
+}
+
+// generate salt
+func generateSalt() ([]byte, error) {
+	salt := make([]byte, 16)
+	_, err := io.ReadFull(rand.Reader, salt)
+	if err != nil {
+		return nil, err
+	}
+	return salt, nil
+}
+
+// Function to hash password along with salt
+func hashPassword(password string, salt []byte) string {
+	saltedPassword := append(salt, []byte(password)...)
+	hash := sha256.Sum256(saltedPassword)
+	return base64.StdEncoding.EncodeToString(hash[:])
+}
