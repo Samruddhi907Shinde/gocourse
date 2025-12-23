@@ -13,6 +13,7 @@ func main() {
 	// Write(b []byte) (n int, err error)
 	// WriteString(s string) (n int, err error)
 
+	// Always defer closing files while working on files to prevent resource leaks.
 	// We should use bufio new writter when writing large chunks of data to our files.
 
 	file, err := os.Create("output.txt")
