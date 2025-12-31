@@ -22,12 +22,12 @@ func main() {
 	//Read and print the response body
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Error reading responde body:", err)
+		fmt.Println("Error reading response body:", err)
 		return
 	}
 
 	// return reponse in bytes
-	// fmt.Println(body)
+	fmt.Println(body)
 
 	// Convert bytes to string and print
 	fmt.Println(string(body))
